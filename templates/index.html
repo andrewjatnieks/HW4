@@ -1,11 +1,43 @@
-
-
 {% extends 'base.html' %}
 
 {% block body %}
 
-	<h2> This is my Flask server! </h2>
+<form method="POST">
+    <input type="text" autofocus="autofocus" name="search_string">
+    <input type="submit" formaction="/search" value="Search">
+</form>
 
-	<img src="{{ url_for('static', filename='images/flask.jpg') }}" />
+<p><a href="{{ url_for('add_champ')}}"> Add a new champion</a></p>
 
+
+   <h3>{{ legend }}</h3>
+{% if champs %}
+    <table>
+        <thead>
+            <tr>
+                <th>Champion Name</th>
+				<th>Difficulty</th>
+				<th>Affiliation</th>
+				<th>Damage</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in champs %}
+            <tr>
+                <td> {{ row.champ_name }}</td>
+				<td> {{ row.champ_difficulty }}</td>
+				<td> {{ row.champ_affiliation }}</td>
+				<td> {{ row.champ_Damage }}</td>
+                <td>
+                    <form action="{{ url_for('get_champ', champ_id=row.champid) }}" method="POST">
+                        <input type="submit" value="Details"  />
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
 {% endblock %}
