@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+
+  <h3>{legend}}</h3>
+
+  <form method="POST" action="">
+
+    {{ form.csrf_token }}
+    {{ form.champid.label }} {{ form.champid(size=5, readonly=true) }}
+    {{ form.champ_name.label }} {{ form.champ_name(size=20) }}
+    {{ form.champ_difficulty.label }} {{ form.champ_difficulty(size=20) }}
+    {{ form.champ_affiliation.label }} {{ form.champ_affiliation(size=20) }}
+    {{ form.champ_Damage.label }} {{ form.champ_Damage(size=20) }}
+
+    <input type="submit" value="save">
+
+  </form>
+
+</div>
+{% endblock %}

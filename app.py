@@ -78,8 +78,10 @@ def add_champ():
         champ_Damage = form.champ_Damage.data)
         db.session.add(champ)
         db.session.commit()
-        return redirect('/')
+        return "My Champ Name is {0} and they are affiliated with {1}.".format(form.champ_name.data, form.champ_affiliation.data)
+        #return redirect('/') 
 
+     
     return render_template('add_champ.html', form=form, pageTitle='Add A New champion',
                             legend="Add A New champion")
 
