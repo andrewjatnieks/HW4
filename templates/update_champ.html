@@ -7,7 +7,7 @@
   <form method="POST" action="">
 
     {{ form.csrf_token }}
-    {{ form.champid.label }} {{ form.champid(size=5, readonly=true) }}
+    {{ form.champ_id.label }} {{ form.champ_id(size=5, readonly=true) }}
     {{ form.champ_name.label }} {{ form.champ_name(size=20) }}
     {{ form.champ_difficulty.label }} {{ form.champ_difficulty(size=20) }}
     {{ form.champ_affiliation.label }} {{ form.champ_affiliation(size=20) }}

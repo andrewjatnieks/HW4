@@ -30,7 +30,7 @@
 				<td> {{ row.champ_affiliation }}</td>
 				<td> {{ row.champ_Damage }}</td>
                 <td>
-                    <form action="{{ url_for('get_champ', champ_id=row.champid) }}" method="POST">
+                    <form action="{{ url_for('get_champ', champ_id=row.champ_id) }}" method="POST">
                         <input type="submit" value="Details"  />
                     </form>
                 </td>

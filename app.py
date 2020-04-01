@@ -29,18 +29,18 @@ db = SQLAlchemy(app)
 
 class ajatnieks_Champs(db.Model):
     #__tablename__ = 'results'
-    champid = db.Column(db.Integer, primary_key=True)
+    champ_id = db.Column(db.Integer, primary_key=True)
     champ_name = db.Column(db.String(255))
     champ_difficulty = db.Column(db.Integer)
     champ_affiliation = db.Column(db.String(255))
     champ_Damage = db.Column(db.String(255))
 
     def __repr__(self):
-        return "id: {0} | Champion name: {1} | Champion Difficulty: {2} | Champion Affiliation: {3} | Champion Damage Type: {4}".format(self.champid, self.champ_name, self.champ_difficulty, self.champ_affiliation, self.champ_Damage)
+        return "id: {0} | Champion name: {1} | Champion Difficulty: {2} | Champion Affiliation: {3} | Champion Damage Type: {4}".format(self.champ_id, self.champ_name, self.champ_difficulty, self.champ_affiliation, self.champ_Damage)
 
 
 class ChampForm(FlaskForm):
-    champid = IntegerField('Champion ID:')
+    champ_id = IntegerField('Champion ID:')
     champ_name = StringField('Champion Name:', validators=[DataRequired()])
     champ_difficulty = StringField('Champion Difficulty:')
     champ_affiliation = StringField('Champion Affiliation:')
@@ -113,9 +113,9 @@ def update_champ(champ_id):
         champ.champ_affiliation = form.champ_affiliation.data
         champ.champ_Damage = form.champ_Damage.data
         db.session.commit()
-        return redirect(url_for('get_champ', champ_id = champ.champid))
+        return redirect(url_for('get_champ', champ_id = champ.champ_id))
 
-    form.champid.data = champ.champid
+    form.champ_id.data = champ.champ_id
     form.champ_name.data = champ.champ_name
     form.champ_difficulty.data = champ.champ_difficulty
     form.champ_affiliation.data = champ.champ_affiliation
