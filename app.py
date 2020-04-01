@@ -27,7 +27,7 @@ app.config['DEBUG'] = True
 db = SQLAlchemy(app)
 
 
-class ajatnieks_Champs(db.Model):
+class ajatnieks(db.Model):
     #__tablename__ = 'results'
     champ_id = db.Column(db.Integer, primary_key=True)
     champ_name = db.Column(db.String(255))
@@ -49,7 +49,7 @@ class ChampForm(FlaskForm):
 
 @app.route('/')
 def index():
-    all_champs = ajatnieks_Champs.query.all()
+    all_champs = ajatnieks.query.all()
     return render_template('index.html', champs=all_champs, pageTitle='Andrew\'s Champs')
 
 
@@ -59,10 +59,10 @@ def search():
         form = request.form
         search_value = form['search_string']
         search = "%{0}%".format(search_value)
-        results = ajatnieks_Champs.query.filter(or_(ajatnieks_Champs.champ_name.like(search),
-                                                    ajatnieks_Champs.champ_difficulty.like(search),
-                                                    ajatnieks_Champs.champ_affiliation.like(search),
-                                                    ajatnieks_Champs.champ_Damage.like(search))).all()
+        results = ajatnieks.query.filter(or_(ajatnieks.champ_name.like(search),
+                                                    ajatnieks.champ_difficulty.like(search),
+                                                    ajatnieks.champ_affiliation.like(search),
+                                                    ajatnieks.champ_Damage.like(search))).all()
         return render_template('index.html', champs=results, pageTitle='Andrew\'s Champs', legend="Search Results")
     else:
         return redirect('/')
@@ -72,14 +72,14 @@ def search():
 def add_champ():
     form = ChampForm()
     if form.validate_on_submit():
-        champ = ajatnieks_Champs(champ_name=form.champ_name.data, 
+        champ = ajatnieks(champ_name=form.champ_name.data, 
         champ_difficulty = form.champ_difficulty.data, 
         champ_affiliation = form.champ_affiliation.data,
         champ_Damage = form.champ_Damage.data)
         db.session.add(champ)
         db.session.commit()
-        return "My Champ Name is {0} and they are affiliated with {1}.".format(form.champ_name.data, form.champ_affiliation.data)
-        #return redirect('/') 
+        #return "My Champ Name is {0} and they are affiliated with {1}.".format(form.champ_name.data, form.champ_affiliation.data)
+        return redirect('/') 
 
      
     return render_template('add_champ.html', form=form, pageTitle='Add A New champion',
@@ -89,7 +89,7 @@ def add_champ():
 @app.route('/delete_champ/<int:champ_id>', methods=['GET', 'POST'])
 def delete_champ(champ_id):
     if request.method == 'POST': #if it's a POST request, delete the friend from the database
-        friend = ajatnieks_Champs.query.get_or_404(champ_id)
+        friend = ajatnieks.query.get_or_404(champ_id)
         db.session.delete(champ)
         db.session.commit()
         return redirect("/")
@@ -99,12 +99,12 @@ def delete_champ(champ_id):
 
 @app.route('/champion/<int:champ_id>', methods=['GET','POST'])
 def get_champ(champ_id):
-    champ = ajatnieks_Champs.query.get_or_404(champ_id)
+    champ = ajatnieks.query.get_or_404(champ_id)
     return render_template('champ.html', form=champ, pageTitle='Champion Details', legend="Champion Details")
 
 @app.route('/champion/<int:champ_id>/update', methods=['GET','POST'])
 def update_champ(champ_id):
-    champ = ajatnieks_Champs.query.get_or_404(champ_id)
+    champ = ajatnieks.query.get_or_404(champ_id)
     form = ChampForm()
 
     if form.validate_on_submit():
