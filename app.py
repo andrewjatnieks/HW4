@@ -78,7 +78,6 @@ def add_champ():
         champ_Damage = form.champ_Damage.data)
         db.session.add(champ)
         db.session.commit()
-        #return "My Champ Name is {0} and they are affiliated with {1}.".format(form.champ_name.data, form.champ_affiliation.data)
         return redirect('/') 
 
      
@@ -88,12 +87,12 @@ def add_champ():
 
 @app.route('/delete_champ/<int:champ_id>', methods=['GET', 'POST'])
 def delete_champ(champ_id):
-    if request.method == 'POST': #if it's a POST request, delete the friend from the database
-        friend = ajatnieks.query.get_or_404(champ_id)
+    if request.method == 'POST': 
+        champ = ajatnieks.query.get_or_404(champ_id)
         db.session.delete(champ)
         db.session.commit()
         return redirect("/")
-    else: #if it's a GET request, send them to the home page
+    else: 
         return redirect("/")
 
 
