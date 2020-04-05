@@ -27,20 +27,20 @@ app.config['DEBUG'] = True
 db = SQLAlchemy(app)
 
 
-class ajatnieks_Champs(db.Model):
+class ajatnieks(db.Model):
     #__tablename__ = 'results'
-    champid = db.Column(db.Integer, primary_key=True)
+    champ_id = db.Column(db.Integer, primary_key=True)
     champ_name = db.Column(db.String(255))
     champ_difficulty = db.Column(db.Integer)
     champ_affiliation = db.Column(db.String(255))
     champ_Damage = db.Column(db.String(255))
 
     def __repr__(self):
-        return "id: {0} | Champion name: {1} | Champion Difficulty: {2} | Champion Affiliation: {3} | Champion Damage Type: {4}".format(self.champid, self.champ_name, self.champ_difficulty, self.champ_affiliation, self.champ_Damage)
+        return "id: {0} | Champion name: {1} | Champion Difficulty: {2} | Champion Affiliation: {3} | Champion Damage Type: {4}".format(self.champ_id, self.champ_name, self.champ_difficulty, self.champ_affiliation, self.champ_Damage)
 
 
 class ChampForm(FlaskForm):
-    champid = IntegerField('Champion ID:')
+    champ_id = IntegerField('Champion ID:')
     champ_name = StringField('Champion Name:', validators=[DataRequired()])
     champ_difficulty = StringField('Champion Difficulty:')
     champ_affiliation = StringField('Champion Affiliation:')
@@ -49,7 +49,7 @@ class ChampForm(FlaskForm):
 
 @app.route('/')
 def index():
-    all_champs = ajatnieks_Champs.query.all()
+    all_champs = ajatnieks.query.all()
     return render_template('index.html', champs=all_champs, pageTitle='Andrew\'s Champs')
 
 
@@ -59,10 +59,10 @@ def search():
         form = request.form
         search_value = form['search_string']
         search = "%{0}%".format(search_value)
-        results = ajatnieks_Champs.query.filter(or_(ajatnieks_Champs.champ_name.like(search),
-                                                    ajatnieks_Champs.champ_difficulty.like(search),
-                                                    ajatnieks_Champs.champ_affiliation.like(search),
-                                                    ajatnieks_Champs.champ_Damage.like(search))).all()
+        results = ajatnieks.query.filter(or_(ajatnieks.champ_name.like(search),
+                                                    ajatnieks.champ_difficulty.like(search),
+                                                    ajatnieks.champ_affiliation.like(search),
+                                                    ajatnieks.champ_Damage.like(search))).all()
         return render_template('index.html', champs=results, pageTitle='Andrew\'s Champs', legend="Search Results")
     else:
         return redirect('/')
@@ -72,37 +72,38 @@ def search():
 def add_champ():
     form = ChampForm()
     if form.validate_on_submit():
-        champ = ajatnieks_Champs(champ_name=form.champ_name.data, 
+        champ = ajatnieks(champ_name=form.champ_name.data, 
         champ_difficulty = form.champ_difficulty.data, 
         champ_affiliation = form.champ_affiliation.data,
         champ_Damage = form.champ_Damage.data)
         db.session.add(champ)
         db.session.commit()
-        return redirect('/')
+        return redirect('/') 
 
+     
     return render_template('add_champ.html', form=form, pageTitle='Add A New champion',
                             legend="Add A New champion")
 
 
 @app.route('/delete_champ/<int:champ_id>', methods=['GET', 'POST'])
 def delete_champ(champ_id):
-    if request.method == 'POST': #if it's a POST request, delete the friend from the database
-        friend = ajatnieks_Champs.query.get_or_404(champ_id)
+    if request.method == 'POST': 
+        champ = ajatnieks.query.get_or_404(champ_id)
         db.session.delete(champ)
         db.session.commit()
         return redirect("/")
-    else: #if it's a GET request, send them to the home page
+    else: 
         return redirect("/")
 
 
 @app.route('/champion/<int:champ_id>', methods=['GET','POST'])
 def get_champ(champ_id):
-    champ = ajatnieks_Champs.query.get_or_404(champ_id)
+    champ = ajatnieks.query.get_or_404(champ_id)
     return render_template('champ.html', form=champ, pageTitle='Champion Details', legend="Champion Details")
 
 @app.route('/champion/<int:champ_id>/update', methods=['GET','POST'])
 def update_champ(champ_id):
-    champ = ajatnieks_Champs.query.get_or_404(champ_id)
+    champ = ajatnieks.query.get_or_404(champ_id)
     form = ChampForm()
 
     if form.validate_on_submit():
@@ -111,9 +112,9 @@ def update_champ(champ_id):
         champ.champ_affiliation = form.champ_affiliation.data
         champ.champ_Damage = form.champ_Damage.data
         db.session.commit()
-        return redirect(url_for('get_champ', champ_id = champ.champid))
+        return redirect(url_for('get_champ', champ_id = champ.champ_id))
 
-    form.champid.data = champ.champid
+    form.champ_id.data = champ.champ_id
     form.champ_name.data = champ.champ_name
     form.champ_difficulty.data = champ.champ_difficulty
     form.champ_affiliation.data = champ.champ_affiliation

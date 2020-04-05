@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+   <p><a href="{{ url_for('index')}}"> Home </a></p>
+   <h3>{{ legend }}</h3>
+
+   {% if form %}
+   <form method="POST" action="">
+       {{ form.csrf_token }}
+       {{ form.friendid.label }} {{ form.friendid }}
+       {{ form.first_name.label }} {{ form.first_name }}
+       {{ form.last_name.label }} {{ form.last_name }}
+
+       <input type="submit" formaction="{{url_for('update_friend', friend_id=form.friendid)}}" value="Update">
+       <input type="submit" formaction="{{url_for('delete_friend', friend_id=form.friendid)}}" value="Delete">
+
+   </form>
+   {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+
+  <h3>Add Champion</h3>
+
+  <form method="POST" action="{{url_for('add_champ')}}">
+
+    {{ form.csrf_token }}
+    {{ form.champ_name.label }} {{ form.champ_name(size=20) }}
+    {{ form.champ_difficulty.label }} {{ form.champ_difficulty(size=20) }}
+    {{ form.champ_affiliation.label }} {{ form.champ_affiliation(size=20) }}
+    {{ form.champ_Damage.label }} {{ form.champ_Damage(size=20) }}
+
+    <input type="submit" value="add_champ">
+
+  </form>
+
+</div>
+{% endblock %}
