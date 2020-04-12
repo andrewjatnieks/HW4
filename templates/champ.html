@@ -7,12 +7,12 @@
    {% if form %}
    <form method="POST" action="">
        {{ form.csrf_token }}
-       {{ form.friendid.label }} {{ form.friendid }}
-       {{ form.first_name.label }} {{ form.first_name }}
-       {{ form.last_name.label }} {{ form.last_name }}
+       {{ form.champ_id.label }} {{ form.champ_id }}
+       {{ form.champ_name.label }} {{ form.champ_name }}
+       {{ form.champ_affiliation.label }} {{ form.champ_affiliation }}
 
-       <input type="submit" formaction="{{url_for('update_friend', friend_id=form.friendid)}}" value="Update">
-       <input type="submit" formaction="{{url_for('delete_friend', friend_id=form.friendid)}}" value="Delete">
+       <input type="submit" formaction="{{url_for('update_champ', champ_id=form.champ_id)}}" value="Update">
+       <input type="submit" formaction="{{url_for('delete_champ', champ_id=form.champ_id)}}" value="Delete">
 
    </form>
    {% endif %}

@@ -6,16 +6,16 @@ from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 import pymysql
-#import secrets
-import os
+import secrets
+#import os
 
-dbuser = os.environ.get('DBUSER')
-dbpass = os.environ.get('DBPASS')
-dbhost = os.environ.get('DBHOST')
-dbname = os.environ.get('DBNAME')
+# dbuser = os.environ.get('DBUSER')
+# dbpass = os.environ.get('DBPASS')
+# dbhost = os.environ.get('DBHOST')
+# dbname = os.environ.get('DBNAME')
 
-#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
 
 
@@ -103,7 +103,7 @@ def get_champ(champ_id):
 
 @app.route('/champion/<int:champ_id>/update', methods=['GET','POST'])
 def update_champ(champ_id):
-    champ = ajatnieks.query.get_or_404(champ_id)
+    champ = ajatnieks.query.get_or_404(champ_id) 
     form = ChampForm()
 
     if form.validate_on_submit():
