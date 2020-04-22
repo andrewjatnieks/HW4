@@ -2,17 +2,10 @@
 
 {% block body %}
 
-<form method="POST">
-    <input type="text" autofocus="autofocus" name="search_string">
-    <input type="submit" formaction="/search" value="Search">
-</form>
-
-<p><a href="{{ url_for('add_champ')}}"> Add a new champion</a></p>
-
 
    <h3>{{ legend }}</h3>
 {% if champs %}
-    <table>
+    <table class="table table-hover table-dark">
         <thead>
             <tr>
                 <th>Champion ID</th>
@@ -33,7 +26,7 @@
 				<td> {{ row.champ_Damage }}</td>
                 <td>
                     <form action="{{ url_for('get_champ', champ_id=row.champ_id) }}" method="POST">
-                        <input type="submit" value="Details"  />
+                        <button class="btn btn-primary" type="submit" value="Details">Details</button>
                     </form>
                 </td>
 

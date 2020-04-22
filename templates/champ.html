@@ -11,8 +11,9 @@
        {{ form.champ_name.label }} {{ form.champ_name }}
        {{ form.champ_affiliation.label }} {{ form.champ_affiliation }}
 
-       <input type="submit" formaction="{{url_for('update_champ', champ_id=form.champ_id)}}" value="Update">
-       <input type="submit" formaction="{{url_for('delete_champ', champ_id=form.champ_id)}}" value="Delete">
+       <button class="btn btn-primary" type="submit" formaction="{{url_for('update_champ', champ_id=form.champ_id)}}">Update</button>
+       <button class="btn btn-danger" type="submit" formaction="{{url_for('delete_champ', champ_id=form.champ_id)}}">Delete</button>
+
 
    </form>
    {% endif %}
